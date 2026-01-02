@@ -1,0 +1,7 @@
+output/camera_frames
+.vscode/
+data/
+
+# Libraries
+lerobot/
+depthai-python/
