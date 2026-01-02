@@ -3,5 +3,4 @@ output/camera_frames
 data/
 
 # Libraries
-lerobot/
 depthai-python/
