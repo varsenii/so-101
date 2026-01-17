@@ -1,21 +1,25 @@
 #!/usr/bin/env bash
 set -e
 
-dataset="$1"
+DATASET="$1"
+EPISODE="$2"
 
-if [ -z "$dataset" ]; then
-  echo "Usage: $0 <dataset_name>"
+if [ -z "$DATASET" ]; then
+  echo "Usage: $0 <dataset_name> <episode_index>"
   exit 1
 fi
-echo "Visualizing dataset: $dataset"
+if ! [[ "$EPISODE" =~ ^[0-9]+$ ]]; then
+    echo "Episode number must be a non-negative integer."
+    exit 1
+fi
+
+echo "Visualizing episode $EPISODE of dataset $DATASET"
 
 source common/config.sh
 source common/huggingface.sh
 
-cd "$LEROBOT_DIR"
-
 HF_USER=$(get_huggingface_username)
-echo "Huggingface user: $HF_USER"
 
-python lerobot/scripts/visualize_dataset_html.py \
-  --repo-id ${HF_USER}/${dataset}  \
+lerobot-dataset-viz \
+  --repo-id ${HF_USER}/${DATASET}  \
+  --episode-index ${EPISODE}

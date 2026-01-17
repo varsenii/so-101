@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
-set -e
 
-source common/config.sh
-cd "$LEROBOT_PATH"
-
-python lerobot/scripts/control_robot.py \
-  --robot.type=so101 \
-  --robot.cameras='{}' \
-  --control.type=calibrate \
-  --control.arms='["main_follower"]'
+lerobot-calibrate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/serial/by-id/usb-1a86_USB_Single_Serial_5AB0179034-if00 \
+    --robot.id=so101_follower

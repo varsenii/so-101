@@ -37,7 +37,7 @@ def getPipeline():
         # Scale ISP output from 1080p → 640x480
         cam_rgb.setIspScale(2, 3)  # 1080 * (2/3) = 720
         cam_rgb.setVideoSize(640, 480)
-        cam_rgb.setFps(30)
+        # cam_rgb.setFps(30)
 
     # Create an UVC (USB Video Class) output node
     uvc = pipeline.createUVC()

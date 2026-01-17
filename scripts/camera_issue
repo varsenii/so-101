@@ -1,0 +1,31 @@
+WARNING 2026-01-11 10:12:34 a_opencv.py:453 Error reading frame in background thread for OpenCVCamera(/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0): OpenCVCamera(/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0) read failed (status=False).
+WARNING 2026-01-11 10:12:34 a_opencv.py:453 Error reading frame in background thread for OpenCVCamera(/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0): OpenCVCamera(/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0) read failed (status=False).
+[ WARN:0@45.327] global cap_v4l.cpp:804 requestBuffers VIDEOIO(V4L2:/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0): failed VIDIOC_REQBUFS: errno=19 (No such device)
+INFO 2026-01-11 10:12:34 a_opencv.py:541 OpenCVCamera(/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0) disconnected.
+INFO 2026-01-11 10:12:34 a_opencv.py:541 OpenCVCamera(/dev/v4l/by-id/usb-Intel_Corporation_Luxonis_Device_18443010F12BC80F00-video-index0) disconnected.
+INFO 2026-01-11 10:12:34 follower.py:230 so101_follower SO101Follower disconnected.
+No files have been modified since last commit. Skipping to prevent empty commit.
+WARNING 2026-01-11 10:12:34 /hf_api.py:4298 No files have been modified since last commit. Skipping to prevent empty commit.
+No files have been modified since last commit. Skipping to prevent empty commit.
+WARNING 2026-01-11 10:12:35 /hf_api.py:4298 No files have been modified since last commit. Skipping to prevent empty commit.
+INFO 2026-01-11 10:12:36 ls/utils.py:227 Exiting
+Traceback (most recent call last):
+  File "/mnt/ssd/software/miniconda3/envs/lerobot/bin/lerobot-record", line 7, in <module>
+    sys.exit(main())
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/scripts/lerobot_record.py", line 532, in main
+    record()
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/configs/parser.py", line 233, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/scripts/lerobot_record.py", line 464, in record
+    record_loop(
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/datasets/image_writer.py", line 36, in wrapper
+    raise e
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/datasets/image_writer.py", line 29, in wrapper
+    return func(*args, **kwargs)
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/scripts/lerobot_record.py", line 307, in record_loop
+    obs = robot.get_observation()
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/robots/so101_follower/so101_follower.py", line 187, in get_observation
+    obs_dict[cam_key] = cam.async_read()
+  File "/mnt/ssd/robotics/so-101/lerobot/src/lerobot/cameras/opencv/camera_opencv.py", line 507, in async_read
+    raise TimeoutError(
+TimeoutError: Timed out waiting for frame from camera OpenCVCamera(/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0) after 200 ms. Read thread alive: True.

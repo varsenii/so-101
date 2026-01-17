@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 NUM_EPISODES="$1"
 
@@ -15,19 +14,36 @@ source common/huggingface.sh
 
 HF_USER=$(get_huggingface_username)
 
-cd "$LEROBOT_DIR"
 
-python lerobot/scripts/control_robot.py \
-  --robot.type=so101 \
-  --control.type=record \
-  --control.fps=30 \
-  --control.single_task="Grasp a lego block and put it in the bin." \
-  --control.repo_id=${HF_USER}/lego_pick_and_place \
-  --control.tags='["so101"]' \
-  --control.warmup_time_s=5 \
-  --control.episode_time_s=30 \
-  --control.reset_time_s=0 \
-  --control.num_episodes=${NUM_EPISODES} \
-  --control.display_data=true \
-  --control.push_to_hub=false \
-  --control.resume=true
+lerobot-record \
+    --robot.type=so101_follower \
+    --robot.port=$FOLLOWER_PORT \
+    --robot.id=so101_follower \
+    --robot.cameras="{
+        'wrist': {
+            'type': 'opencv', 
+            'index_or_path': '$WRIST_CAMERA_SYMLINK', 
+            'width': 640, 
+            'height': 480, 
+            'fps': 30
+        }, 
+        'overhead': {
+            'type': 'opencv', 
+            'index_or_path': '$OVERHEAD_CAMERA_SYMLINK', 
+            'width': 640, 
+            'height': 480, 
+            'fps': 60
+        }
+    }" \
+    --teleop.type=so101_leader \
+    --teleop.port=$LEADER_PORT \
+    --teleop.id=so101_leader \
+    --display_data=true \
+    --dataset.repo_id=${HF_USER}/lego_pick_and_place \
+    --dataset.num_episodes=${NUM_EPISODES} \
+    --dataset.single_task="Grasp a lego block and put it in the bin." \
+    --dataset.fps=30 \
+    --dataset.episode_time_s=30 \
+    --dataset.reset_time_s=10 \
+    --dataset.push_to_hub=false \
+    --resume=true

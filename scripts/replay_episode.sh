@@ -18,13 +18,10 @@ source common/config.sh
 source common/huggingface.sh
 
 HF_USER=$(get_huggingface_username)
-echo "Huggingface user: $HF_USER"
 
-cd "$LEROBOT_DIR"
-
-python lerobot/scripts/control_robot.py \
-    --robot.type=so101 \
-    --control.type=replay \
-    --control.fps=30 \
-    --control.repo_id=${HF_USER}/${DATASET} \
-    --control.episode=${EPISODE} \
+lerobot-replay \
+    --robot.type=so101_follower \
+    --robot.port=$FOLLOWER_PORT \
+    --robot.id=so101_follower \
+    --dataset.repo_id=${HF_USER}/${DATASET} \
+    --dataset.episode=${EPISODE}

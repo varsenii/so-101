@@ -13,15 +13,15 @@ source common/huggingface.sh
 
 HF_USER=$(get_huggingface_username)
 
-cd "$LEROBOT_DIR"
-python lerobot/scripts/train.py \
+lerobot-train \
   --dataset.repo_id=${HF_USER}/${DATASET} \
   --policy.type=act \
   --output_dir=${OUTPUT_DIR}/train/act_${DATASET}_test \
   --job_name=act_${DATASET} \
   --policy.device=cuda \
+  --policy.repo_id=${HF_USER}/act_${DATASET} \
   --wandb.enable=true \
-  --batch_size=32
+  --batch_size=32 \
   --steps=4870 \
   --log_freq=4 \
   --save_freq=4870 \

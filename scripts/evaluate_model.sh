@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
 
 MODEL="$1"
 
@@ -13,20 +12,39 @@ source common/huggingface.sh
 
 HF_USER=$(get_huggingface_username)
 
-cd "$LEROBOT_DIR"
 
-python lerobot/scripts/control_robot.py \
-  --robot.type=so101 \
-  --control.type=record \
-  --control.fps=30 \
-  --control.single_task="Grasp a lego block and put it in the bin." \
-  --control.repo_id=${HF_USER}/eval_lego_pick_and_place_$(date +%Y-%m-%d_%H-%M-%S) \
-  --control.policy.path=${MODEL} \
-  --control.display_data=true \
-  --control.tags='["so101"]' \
-  --control.warmup_time_s=5 \
-  --control.episode_time_s=60 \
-  --control.reset_time_s=10 \
-  --control.num_episodes=20 \
-  --control.display_data=true \
-  --control.push_to_hub=false \
+lerobot-record \
+    --robot.type=so101_follower \
+    --robot.port=$FOLLOWER_PORT \
+    --robot.id=so101_follower \
+    --robot.cameras="{
+        'wrist': {
+            'type': 'opencv', 
+            'index_or_path': '$WRIST_CAMERA_SYMLINK', 
+            'width': 640, 
+            'height': 480, 
+            'fps': 30,
+            'fourcc': 'MJPG',
+            'warmup_s': 3
+        }, 
+        'overhead': {
+            'type': 'opencv', 
+            'index_or_path': '$OVERHEAD_CAMERA_SYMLINK', 
+            'width': 640, 
+            'height': 480, 
+            'fps': 60,
+            'fourcc': 'MJPG',
+            'warmup_s': 3   
+        }
+    }" \
+    --display_data=false \
+    --dataset.repo_id=${HF_USER}/eval_lego_pick_and_place_$(date +%Y-%m-%d_%H-%M-%S)  \
+    --dataset.single_task="Grasp a lego block and put it in the bin." \
+    --dataset.fps=30 \
+    --dataset.episode_time_s=30 \
+    --dataset.reset_time_s=3 \
+    --policy.path=${MODEL} \
+    # --policy.pretrained_model_path=${MODEL} \
+    # --policy.path=${MODEL}
+
+
